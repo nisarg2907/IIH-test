@@ -18,10 +18,22 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UserTableRow from './components/UserDisplay';
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#333',
+    },
+    secondary: {
+      main: '#777',
+    },
+  },
+  typography: {
+    fontFamily: 'Arial, sans-serif',
+  },
+});
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);           
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [bloodGroups, setBloodGroups] = useState([]);
   const [selectedBloodGroup, setSelectedBloodGroup] = useState('');
@@ -35,7 +47,12 @@ function App() {
         if (response.status === 200) {
           const data = response.data;
           setUsers(data.users);
-          const groups = Array.from(new Set(data.users.map(user => user.bloodGroup)));
+          const groups = [];
+          for (const user of data.users) {
+            if (!groups.includes(user.bloodGroup)) {
+              groups.push(user.bloodGroup);
+            }
+          }
           setBloodGroups(groups);
         } else {
           console.error('Error fetching users:', response.statusText);

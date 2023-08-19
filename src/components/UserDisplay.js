@@ -12,7 +12,7 @@ function UserTableRow({ user }) {
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="textSecondary">
+        <Typography variant="body1" >
           {user.email}
         </Typography>
       </TableCell>
